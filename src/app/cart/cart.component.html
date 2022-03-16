@@ -1,0 +1,65 @@
+<!--   <div class="form-group">
+    <label for="name">Product Name</label>
+      <input type="text" id="name" name="name" ngModel required #nameCtrl="ngModel">
+      <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">Please enter a name</span>
+  </div>
+  <div class="form-group">
+    <label for="side">Choose Side</label>
+    <select name="side" id="side" ngModel>
+      <option *ngFor = "let product of productsInCart" [value]="product.value">
+        {{product.display}}
+      </option>
+    </select>
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Add Character</button>
+ -->
+ <span *ngIf="productsInCart.length!=0">
+      <div class="float-end">
+        <button class="float-right btn btn-warning" type="button" (click)="clearCart()">Clear Cart</button>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+          <th scope="col">Product Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Total Price</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody class="table-striped">
+          <tr *ngFor = "let product of productsInCart">
+            <td scope="row">{{product.name}}</td>
+            <td scope="row" >
+              <i class="fa fa-minus"></i>&nbsp;
+              <span><input (keyup.enter)="onEnter(product)" type="text" maxlength="3" style="width: 25px; text-align: center;" [value]="product.orderQuantity"></span>&nbsp;
+              <i class="fa fa-plus"></i>
+            </td>
+            <td scope="row">{{product.price | currency}}</td>
+            <td scope="row">
+              {{(product.price * product.orderQuantity)| currency}} &nbsp;&nbsp;
+            </td>
+            <td scope="row">
+              <i class="fa fa-times"></i>
+
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">Total</td>
+            <td id="right">{{getTotalCartValue() | currency}}</td>
+            <td id="right"></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+ </span>
+
+ <span *ngIf="productsInCart.length==0">
+   Your cart is empty! <a routerLink="/products" class="btn btn-primary btn-sm">Time to shop!</a>
+ </span>
+
+
+
