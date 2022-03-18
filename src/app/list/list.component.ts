@@ -14,6 +14,7 @@ export class ListComponent implements OnInit, OnDestroy {
   coolStoreService: CoolStoreProductsService;
   loadedSide = '';
   subscription:Subscription;
+  page = 4;
 
   constructor(activatedRoute:ActivatedRoute, coolStoreService:CoolStoreProductsService) {
     this.activatedRoute = activatedRoute;
