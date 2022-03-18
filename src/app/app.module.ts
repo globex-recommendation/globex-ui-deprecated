@@ -19,7 +19,8 @@ import { CartComponent } from './cart/cart.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ProductRecommendationComponent } from './product-recommendation/product-recommendation.component';
-import { CoolStoreCookieService } from './coolstore-cookie-service';
+import { HttpErrorHandler } from './http-error-handler.service';
+import { MessageService } from './message.service';
 
 /* const routes = [
   {path: 'products', component: TabsComponent, children : [
@@ -59,7 +60,7 @@ const routes = [
     HttpClientModule,
     NgbModule
   ],
-  providers: [CoolStoreProductsService, LogService, CookieService, CoolStoreCookieService],
+  providers: [CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,14 +1,18 @@
-export class Shelter {
-  id: string;
-  lat: number;
-  lon: number;
-  name?: string;
-  rescued = 0;
+export class Product {
 
-  constructor(id: string, lon: number, lat: number, name?: string) {
-      this.id = id;
-      this.lon = lon;
-      this.lat = lat;
-      this.name = name;
+
+  id: string;
+  name: string;
+  desc: string;
+  price: string;
+  quantity: number;
+
+
+  constructor(id: string, name: string,  desc: string,  price: string,  quantity: number) {
+    this.id = id;
+    this.name = name;
+    this.desc = desc;
+    this.price = price;
+    this.quantity = quantity;
   }
 }

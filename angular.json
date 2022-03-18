@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "globex-ux": {
+    "globex-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/globex-ux/browser",
+            "outputPath": "dist/globex-ui/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -38,13 +38,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 }
               ],
               "fileReplacements": [
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "globex-ux:build:production"
+              "browserTarget": "globex-ui:build:production"
             },
             "development": {
-              "browserTarget": "globex-ux:build:development"
+              "browserTarget": "globex-ui:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "globex-ux:build"
+            "browserTarget": "globex-ui:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/globex-ux/server",
+            "outputPath": "dist/globex-ui/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -134,12 +134,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "globex-ux:build:development",
-              "serverTarget": "globex-ux:server:development"
+              "browserTarget": "globex-ui:build:development",
+              "serverTarget": "globex-ui:server:development"
             },
             "production": {
-              "browserTarget": "globex-ux:build:production",
-              "serverTarget": "globex-ux:server:production"
+              "browserTarget": "globex-ui:build:production",
+              "serverTarget": "globex-ui:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -153,12 +153,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "globex-ux:build:production",
-              "serverTarget": "globex-ux:server:production"
+              "browserTarget": "globex-ui:build:production",
+              "serverTarget": "globex-ui:server:production"
             },
             "development": {
-              "browserTarget": "globex-ux:build:development",
-              "serverTarget": "globex-ux:server:development"
+              "browserTarget": "globex-ui:build:development",
+              "serverTarget": "globex-ui:server:development"
             }
           },
           "defaultConfiguration": "production"
@@ -166,5 +166,5 @@
       }
     }
   },
-  "defaultProject": "globex-ux"
+  "defaultProject": "globex-ui"
 }

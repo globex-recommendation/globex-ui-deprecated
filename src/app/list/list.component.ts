@@ -23,23 +23,16 @@ export class ListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.coolStoreService.fetchCharacters();
+    this.fetchPaginatedProductsList();
+  }
 
-    this.activatedRoute.params.subscribe(
-      (params) => {
-        this.characters = this.coolStoreService.getCharacters(params['side'])
-        this.loadedSide = params['side'];
-      }
-    );
-    this.subscription = this.coolStoreService.characterChanged.subscribe(
-      () => {
-        this.characters = this.coolStoreService.getCharacters(this.loadedSide);
-      }
-    );
+  fetchPaginatedProductsList() {
+    this.coolStoreService.fetchPaginatedProductsList()
+      .subscribe(products => (this.characters = products));
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe;
+   
   }
 
 

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UserActivityModel } from '../user-activity.model';
+import { CartService } from '../cart.service';
+import { CoolstoreCookiesService } from '../coolstore-cookies.service';
 
 
 @Component({
@@ -13,34 +15,38 @@ export class ItemComponent implements OnInit {
   @Input() character:any;
   coolStoreService:CoolStoreProductsService;
   cookieService: CookieService;
+  cartService:CartService;
+  coolstoreCookiesService: CoolstoreCookiesService;
 
   likeProductsListFromCookie = new Array;
 
-  constructor(coolStoreService:CoolStoreProductsService, cookieService: CookieService) {
+  constructor(coolStoreService:CoolStoreProductsService, cookieService: CookieService, 
+    coolstoreCookiesService: CoolstoreCookiesService, cartService:CartService) {
     this.coolStoreService = coolStoreService;
     this.cookieService = cookieService;
+    this.coolstoreCookiesService = coolstoreCookiesService;
+    this.cartService = cartService; 
   }
 
   ngOnInit(): void {
+   this.setupProductLikes()
+
+  }
+
+  setupProductLikes(){
     var productLikesCookieValue = this.cookieService.get('productLikes');
     this.likeProductsListFromCookie = productLikesCookieValue.split(',');
-    //console.log("this.likeProductsListFromCookie", this.likeProductsListFromCookie);
     if(this.likeProductsListFromCookie.indexOf(this.character.itemId) !== -1){
       this.character.liked = true;
     }
-
   }
 
-  onAssign(side:any){
-   // this.character.side = side;
-    //this.sideAssigned.emit({name:this.character.name, side:side})
 
-    this.coolStoreService.onSideChosen({name:this.character.name, side:side});
-  }
 
   nullifyCookies(){
-    this.cookieService.set('productLikes', '');
+    this.coolstoreCookiesService.nullifyCookies();
   }
+
   saveUserLike(event, product) {
     console.log(product)
     product.liked = true;
@@ -63,7 +69,7 @@ export class ItemComponent implements OnInit {
   }
 
   addToCart(event, product) {
-    this.coolStoreService.addProductToCart(product);
+    this.cartService.addProductToCart(product);
     console.log(product);
   }
 }

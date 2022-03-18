@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { LogService } from '../log.service';
+import { Product } from '../models/product.model';
+
+
 
 @Component({
   selector: 'app-product-recommendation',
@@ -16,22 +19,21 @@ export class ProductRecommendationComponent implements OnInit {
   recommendedProducts;
   subscription:Subscription;
 
+
   constructor(coolStoreService:CoolStoreProductsService, logService:LogService) {
     this.coolStoreService = coolStoreService;
+    this.logService = logService;
   }
 
   ngOnInit(): void {
-    this.recommendedProducts = this.coolStoreService.fetchRecommendedProducts();
-    this.subscription = this.coolStoreService.characterChanged.subscribe(
-      () => {
-        this.recommendedProducts = this.coolStoreService.getRecommendedProducts();
-      }
-    );
-    console.log("recommendedProducts.......", this.recommendedProducts);
-
-
+    this.fetchRecommendedProducts();
   }
 
+  
+  fetchRecommendedProducts() {
+    this.coolStoreService.getRecommendedProducts()
+      .subscribe(products => (this.recommendedProducts = products));
+  }
 
 
 }

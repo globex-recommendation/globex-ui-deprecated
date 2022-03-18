@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from '../cart.service';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 
 @Component({
@@ -10,10 +11,10 @@ export class CartComponent implements OnInit {
   //availableSides = [{display: 'None', value: ''}, {display: 'Light', value: 'light'}, {display: 'Dark', value: 'dark'}]
   productsInCart;
 
-  coolStoreService: CoolStoreProductsService;
+  cartService: CartService;
 
-  constructor(coolStoreService:CoolStoreProductsService) {
-    this.coolStoreService = coolStoreService;
+  constructor(cartService:CartService) {
+    this.cartService = cartService;
   }
 
   ngOnInit(): void {
@@ -21,17 +22,17 @@ export class CartComponent implements OnInit {
   }
 
   getCart() {
-    this.productsInCart = this.coolStoreService.getProductsInCart();
+    this.productsInCart = this.cartService.getProductsInCart();
   }
   getTotalCartValue() {
-    return  this.coolStoreService.getTotalCartValue();
+    return  this.cartService.getTotalCartValue();
   }
   clearCart(){
     this.productsInCart = [];
-    this.coolStoreService.clearCart();
+    this.cartService.clearCart();
   }
   getTotalProductsQuantityInCart(){
-    this.coolStoreService.getTotalProductsQuantityInCart();
+    this.cartService.getTotalProductsQuantityInCart();
   }
 
   onEnter(product){

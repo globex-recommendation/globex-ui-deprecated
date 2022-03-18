@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoolStoreProductsService } from '../coolstore-products.service';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-header',
@@ -7,20 +7,22 @@ import { CoolStoreProductsService } from '../coolstore-products.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  coolStoreService:CoolStoreProductsService
-  constructor(coolStoreService:CoolStoreProductsService) {
-    this.coolStoreService = coolStoreService;
+  
+  cartService:CartService
+
+  constructor(cartService:CartService) {
+    this.cartService = cartService;
   }
 
   ngOnInit(): void {
   }
 
   getTotalCartValue() {
-    return this.coolStoreService.getTotalCartValue();
+    return this.cartService.getTotalCartValue();
   }
 
   getItemsCountOfProductsInCart() {
-    return this.coolStoreService.getTotalProductsQuantityInCart()
+    return this.cartService.getTotalProductsQuantityInCart()
   }
 
 }

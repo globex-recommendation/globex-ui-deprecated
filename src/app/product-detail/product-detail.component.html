@@ -1,3 +1,22 @@
-<div>
-product detail page
+<div class="card">
+        <div class="wrapper row">
+            <div class="col-md-6">
+                <div class="tab-content">
+                    <img src="http://placekitten.com/400/252" />
+                </div>
+            </div>
+            <div class="\ col-md-6">
+                <div class="userLikeBtn">
+                    <i *ngIf="!currentProduct.liked" class="float-right fa fa-heart-o userLikeOff"  (click)="saveUserLike($event, currentProduct)" ></i>
+                    <i *ngIf="currentProduct.liked" class="float-right fa fa-heart userLikeOn" ></i>
+                  </div>
+            <h3 class="product-title">{{currentProduct.name}}</h3>
+                <p class="product-description">{{currentProduct.desc}}</p>
+                <h4 class="price">Price: <span>{{currentProduct.price | currency}}</span></h4>
+                <div class="action">
+                    <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                
+                </div>
+            </div>
+        </div>
 </div>

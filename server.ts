@@ -8,10 +8,13 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+import { Request, Response, NextFunction } from 'express';
+
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/globex-ux/browser');
+  const distFolder = join(process.cwd(), 'dist/globex-ui/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
 
@@ -26,21 +29,37 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   //const http = require('http');
   const axios = require('axios');
-  const product_url = 'http://localhost:8081/services/products'
 
+  // Get Products
+  const product_url = 'http://localhost:8081/services/products'
   server.get('/api/getProducts', (req, res) => {
     console.log("getProducts")
     var getProducts= [];
     axios.get(product_url)
       .then(response => {
-        getProducts =  response.data;
+        getProducts =  response.data;;
+        console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
         res.send(getProducts);
       })
       .catch(error => {
         console.log(error);
       });
+  });
 
-
+  // Get Products
+  const recommend_product_url = 'http://localhost:8081/services/products'
+  server.get('/api/getReccoProducts', (req, res) => {
+    console.log("getProducts")
+    var getProducts= [];
+    axios.get(recommend_product_url)
+      .then(response => {
+        getProducts =  response.data;;
+        console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
+        res.send(getProducts);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   });
 
   // Serve static files from /browser
@@ -57,7 +76,11 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+ 
+  var port = process.env['PORT'] || process.env['OPENSHIFT_NODEJS_PORT'] || 8080,
+    ip = process.env['IP'] || process.env['OPENSHIFT_NODEJS_IP'] || '0.0.0.0',
+    secport = process.env['PORT'] || process.env['OPENSHIFT_NODEJS_PORT'] || 8443;
+
 
   // Start up the Node server
   const server = app();
