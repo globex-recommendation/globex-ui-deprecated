@@ -1,9 +1,7 @@
-import { ConstantPool } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { LogService } from '../log.service';
-import { Product } from '../models/product.model';
 
 
 

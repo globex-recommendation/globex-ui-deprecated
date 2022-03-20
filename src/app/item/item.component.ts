@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { CookieService } from 'ngx-cookie-service';
-import { UserActivityModel } from '../user-activity.model';
 import { CartService } from '../cart.service';
 import { CoolstoreCookiesService } from '../coolstore-cookies.service';
+import { GlobexConstants } from '../core/constants/globex.constants';
+import { ActionInfo, Activity, UserActivityModel, UserInfo } from '../models/user-activity.model';
+import {v4 as uuidv4} from 'uuid';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { CoolstoreCookiesService } from '../coolstore-cookies.service';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  @Input() character:any;
+  @Input() product:any;
   coolStoreService:CoolStoreProductsService;
   cookieService: CookieService;
   cartService:CartService;
@@ -36,8 +38,8 @@ export class ItemComponent implements OnInit {
   setupProductLikes(){
     var productLikesCookieValue = this.cookieService.get('productLikes');
     this.likeProductsListFromCookie = productLikesCookieValue.split(',');
-    if(this.likeProductsListFromCookie.indexOf(this.character.itemId) !== -1){
-      this.character.liked = true;
+    if(this.likeProductsListFromCookie.indexOf(this.product.itemId) !== -1){
+      this.product.liked = true;
     }
   }
 
@@ -48,7 +50,7 @@ export class ItemComponent implements OnInit {
   }
 
   saveUserLike(event, product) {
-    console.log(product)
+    /* console.log(product)
     product.liked = true;
     var productLikesCookieValue = this.cookieService.get('productLikes')
     var likedProductsList = [];
@@ -60,9 +62,14 @@ export class ItemComponent implements OnInit {
 
     this.cookieService.set('productLikes', likedProductsList.toString());
 
-    const userActivity = new UserActivityModel();
-    userActivity.idSite="";
-
+     const userActivity = new UserActivityModel( 
+      GlobexConstants.General.SITE_ID,
+      new Activity(uuidv4(), "url",         "rand" ,       "type") ,
+      new UserInfo(0,0,0,'',0,new Date()),
+      new ActionInfo('productId', '', '')
+      )
+ */    
+      this.coolstoreCookiesService.saveUserLike(event, product);
     //export interface UserActivity {
 
 

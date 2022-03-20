@@ -3,8 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CartService } from '../cart.service';
 import { CoolstoreCookiesService } from '../coolstore-cookies.service';
 import { CoolStoreProductsService } from '../coolstore-products.service';
-import { Product } from '../models/product.model';
-import { UserActivityModel } from '../user-activity.model';
+import { PaginatedProductsList } from '../models/product.model';
 
 
 @Component({
@@ -35,10 +34,8 @@ export class ProductDetailComponent implements OnInit {
     
    }
    getProductDetails() {
-      this.currentProduct = new Product(
-              'E12343', 'Quarkus T-shirt', 
-              'Our T-Shirt is an everyday essential! This short-sleeve heavyweight T-shirt is comfortable, economical and made to last. Designed with a traditional fit that runstrue to size, he’ll show off his personality, humor and interests with an easy relaxed style.',
-              '10', 736 );
+      this.currentProduct = new PaginatedProductsList()
+      
               console.log("this.currentProduct ", this.currentProduct )
               
   }

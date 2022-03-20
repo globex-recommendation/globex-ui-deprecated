@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LogService } from "./log.service";
-import axios, { AxiosError } from "axios";
-import { Product } from "./models/product.model";
-import { Observable, Subject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { HandleError, HttpErrorHandler } from './http-error-handler.service';
 
 
 @Injectable({

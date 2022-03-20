@@ -9,6 +9,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
 import { Request, Response, NextFunction } from 'express';
+import { PaginatedProductsList } from 'src/app/models/product.model';
 
 
 // The Express app is exported so that it can be used by serverless Functions.
@@ -33,12 +34,28 @@ export function app(): express.Express {
   // Get Products
   const product_url = 'http://localhost:8081/services/products'
   server.get('/api/getProducts', (req, res) => {
-    console.log("getProducts")
+    console.log("SR:::: O/P from '/api/getProducts invoked")
     var getProducts= [];
     axios.get(product_url)
       .then(response => {
         getProducts =  response.data;;
-        console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
+        //console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
+        res.send(getProducts);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  });
+
+  
+  const paginated_product_url = 'https://a19a3794-9518-499c-8edb-2fd67ec7511f.mock.pstmn.io/service/getPaginatedProducts'
+  server.get('/api/getPaginatedProducts', (req, res) => {
+    console.log("SSR:::: O/P from '/api/getPaginatedProducts' invoked from server.ts with req.params", req.query['page'])
+    var getProducts:PaginatedProductsList;
+    axios.get(paginated_product_url + "?" + req.params)
+      .then(response => {
+        getProducts =  response.data;;
+        //console.log("SSR:::: O/P from '/api/getPaginatedProducts'",getProducts )
         res.send(getProducts);
       })
       .catch(error => {
@@ -48,13 +65,13 @@ export function app(): express.Express {
 
   // Get Products
   const recommend_product_url = 'http://localhost:8081/services/products'
-  server.get('/api/getReccoProducts', (req, res) => {
-    console.log("getProducts")
+  server.get('/api/getRecommendedProducts', (req, res) => {
+    console.log('SSR::::  /api/getRecommendedProducts invoked');
     var getProducts= [];
     axios.get(recommend_product_url)
       .then(response => {
         getProducts =  response.data;;
-        console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
+        //console.log("SSR:::: O/P from '/api/getRecommendedProducts'",getProducts )
         res.send(getProducts);
       })
       .catch(error => {

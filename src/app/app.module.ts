@@ -14,13 +14,15 @@ import { ListComponent } from './list/list.component';
 import { ItemComponent } from './item/item.component';
 import { CoolStoreProductsService } from './coolstore-products.service';
 import { LogService } from './log.service';
-import { UserActivityModel } from './user-activity.model';
+import { UserActivityModel } from './models/user-activity.model';
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ProductRecommendationComponent } from './product-recommendation/product-recommendation.component';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
+import { HomeComponent } from './home/home.component';
+
 
 /* const routes = [
   {path: 'products', component: TabsComponent, children : [
@@ -28,15 +30,16 @@ import { MessageService } from './message.service';
     {path: ':side', component: ListComponent}
   ]},
   {path: 'cart', component: CartComponent},
-  {path: '**', redirectTo: '/characters'}
+  {path: '**', redirectTo: '/products'}
 
 ]; */
 
 const routes = [
+  {path: 'home', component: HomeComponent},
   {path: 'products', component: TabsComponent},
   {path: 'cart', component: CartComponent},
   {path: 'product-detail/:itemId', component: ProductDetailComponent},
-  {path: '**', redirectTo: '/products'}
+  {path: '**', redirectTo: '/home'}
 
 ];
 
@@ -49,7 +52,8 @@ const routes = [
     CartComponent,
     HeaderComponent,
     ProductDetailComponent,
-    ProductRecommendationComponent
+    ProductRecommendationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
