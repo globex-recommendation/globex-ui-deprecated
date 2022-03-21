@@ -6,13 +6,15 @@ import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
+import serverEnvConfig from "server.env.config";
 
 
 @Injectable()
 export class CoolStoreProductsService {
-
-  //paginatedProductsListUrl = '/api/getProducts';  // URL to web api
-  paginatedProductsListUrl = '/api/getPaginatedProducts';  // URL to web api
+  
+  
+  paginatedProductsListUrl = serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS;  // URL to web api
+  paginationLimit = serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS_LIMIT;
   recommendedProductsListUrl = '/api/getRecommendedProducts';  // URL to web api
   private handleError: HandleError;
   private logService: LogService;
@@ -32,7 +34,7 @@ export class CoolStoreProductsService {
  
   fetchPaginatedProductsList(page): Observable<any> {
     console.log("[CoolStoreProductsService]-[fetchPaginatedProductsList] called");
-    return this.http.get<any>(this.paginatedProductsListUrl+"?page="+page)
+    return this.http.get<any>(this.paginatedProductsListUrl+"?page="+page + "&limit="+this.paginationLimit ) 
       .pipe(
         catchError(this.handleError('fetchPaginatedProductsList', ''))
       );

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -22,17 +22,12 @@ import { ProductRecommendationComponent } from './product-recommendation/product
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { HomeComponent } from './home/home.component';
+import { AppConfigService } from './providers/app-config.service'
 
 
-/* const routes = [
-  {path: 'products', component: TabsComponent, children : [
-    {path: '', redirectTo: 'all', pathMatch: 'full'},
-    {path: ':side', component: ListComponent}
-  ]},
-  {path: 'cart', component: CartComponent},
-  {path: '**', redirectTo: '/products'}
-
-]; */
+export function initConfig(appConfig: AppConfigService) {
+  return () => appConfig.loadConfig();
+}
 
 const routes = [
   {path: 'home', component: HomeComponent},
@@ -64,7 +59,11 @@ const routes = [
     HttpClientModule,
     NgbModule
   ],
-  providers: [CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService],
+  providers: [
+    {
+      provide: APP_INITIALIZER, useFactory: initConfig,  deps: [AppConfigService],  multi: true
+    }, 
+    CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

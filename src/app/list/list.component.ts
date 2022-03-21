@@ -18,7 +18,7 @@ export class ListComponent implements OnInit, OnDestroy {
   coolStoreService: CoolStoreProductsService;
   loadedSide = '';
   subscription:Subscription;
-  page = 0;
+  page = 1;
 
   constructor(activatedRoute:ActivatedRoute, coolStoreService:CoolStoreProductsService) {
     this.activatedRoute = activatedRoute;
@@ -32,7 +32,8 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   fetchPaginatedProductsList(page) {
-    this.coolStoreService.fetchPaginatedProductsList(page-1)
+    
+    this.coolStoreService.fetchPaginatedProductsList(page)
       .subscribe(products => (this.products = products));
       
       

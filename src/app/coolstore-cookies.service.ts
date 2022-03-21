@@ -16,11 +16,6 @@ export class CoolstoreCookiesService {
     this.cookieService = cookieService;
   }
 
-  ngOnInit(): void {
-    this.getAllProductLikes();
-    
-    
-   }
 
   saveUserLike(event, product) {
     console.log("[CoolstoreCookieService].saveUserLike()", product)

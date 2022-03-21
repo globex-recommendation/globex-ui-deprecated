@@ -8,15 +8,27 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+import { AppConfigService } from './src/app/providers/app-config.service'
 import { Request, Response, NextFunction } from 'express';
 import { PaginatedProductsList } from 'src/app/models/product.model';
+import serverEnvConfig from 'server.env.config';
+
 
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
+  console.log("server called")
   const server = express();
   const distFolder = join(process.cwd(), 'dist/globex-ui/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
+  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  server.engine('html', ngExpressEngine({
+    bootstrap: AppServerModule,
+  }));
+
+  server.set('view engine', 'html');
+  server.set('views', distFolder);
 
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
@@ -27,32 +39,19 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
+  
+  //API Setup START
   // Example Express Rest API endpoints
   //const http = require('http');
   const axios = require('axios');
-
-  // Get Products
-  const product_url = 'http://localhost:8081/services/products'
-  server.get('/api/getProducts', (req, res) => {
-    console.log("SR:::: O/P from '/api/getProducts invoked")
-    var getProducts= [];
-    axios.get(product_url)
-      .then(response => {
-        getProducts =  response.data;;
-        //console.log("SSR:::: O/P from '/api/getProducts'",getProducts )
-        res.send(getProducts);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  });
-
-  
-  const paginated_product_url = 'https://a19a3794-9518-499c-8edb-2fd67ec7511f.mock.pstmn.io/service/getPaginatedProducts'
-  server.get('/api/getPaginatedProducts', (req, res) => {
-    console.log("SSR:::: O/P from '/api/getPaginatedProducts' invoked from server.ts with req.params", req.query['page'])
+  server.get(serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS, (req, res) => {
+    console.log("SSR:::: O/P from '/api/getPaginatedProducts' invoked from server.ts with req.params", req.query['page'] 
+    + 'with URL as' + serverEnvConfig.CATALOG_GETPAGINATEDPRODUCTS_SERVICE + "?" + req.query['page']  + "&limit=" +req.query['limit'] )
     var getProducts:PaginatedProductsList;
-    axios.get(paginated_product_url + "?" + req.params)
+    var myTimestamp = new Date().getTime().toString();
+    var url = serverEnvConfig.CATALOG_GETPAGINATEDPRODUCTS_SERVICE.toString()+ "?page=" + req.query['page']  + "&limit=" +req.query['limit'] + "&timestamp=" + myTimestamp;
+    console.log("URL called is: ", url);
+    axios.get(url)
       .then(response => {
         getProducts =  response.data;;
         //console.log("SSR:::: O/P from '/api/getPaginatedProducts'",getProducts )
@@ -63,12 +62,12 @@ export function app(): express.Express {
       });
   });
 
+
   // Get Products
-  const recommend_product_url = 'http://localhost:8081/services/products'
-  server.get('/api/getRecommendedProducts', (req, res) => {
+  server.get(serverEnvConfig.ANGULR_API_GETRECOMMENDEDPRODUCTS, (req, res) => {
     console.log('SSR::::  /api/getRecommendedProducts invoked');
     var getProducts= [];
-    axios.get(recommend_product_url)
+    axios.get(serverEnvConfig.CATALOG_RECOMMENDED_PRODUCTS_SERVICE)
       .then(response => {
         getProducts =  response.data;;
         //console.log("SSR:::: O/P from '/api/getRecommendedProducts'",getProducts )
@@ -78,27 +77,30 @@ export function app(): express.Express {
         console.log(error);
       });
   });
+  //API Setup END
+
 
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
-
+  
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
+
   return server;
 }
 
+
+
+
+
 function run(): void {
  
-  var port = process.env['PORT'] || process.env['OPENSHIFT_NODEJS_PORT'] || 8080,
-    ip = process.env['IP'] || process.env['OPENSHIFT_NODEJS_IP'] || '0.0.0.0',
-    secport = process.env['PORT'] || process.env['OPENSHIFT_NODEJS_PORT'] || 8443;
-
-
+  const port = process.env['PORT'] || 4000;
   // Start up the Node server
   const server = app();
   server.listen(port, () => {

@@ -4,7 +4,7 @@
     <ngb-carousel class="carousel-dark slide" *ngIf="recommendedProducts">
       <ng-template ngbSlide *ngFor="let product of recommendedProducts" >
         <div class="picsum-img-wrapper">
-          <img class="img-responsive img-circle" src="../../assets/images/{{product.name}}.jpg" style=" height:200px; padding-left: 200px;" >
+          <img class="img-responsive img-circle" src="../../assets/images/{{product.itemId}}.jpg" style=" height:200px; padding-left: 200px;" >
         </div>
         <div class="carousel-caption d-none d-md-block">
           <h3>{{product.name}}</h3>

@@ -1,19 +1,37 @@
-FROM node:16.14.0-alpine  as buildContainer
+# First stage builds the application
+FROM registry.access.redhat.com/ubi8/nodejs-16:1 as builder
+
+# Add dependencies
+COPY --chown=1001:1001 package*.json $HOME
+
+RUN npm install -g @angular/cli
+
+#### install project dependencies
+RUN npm install
 
 
-# Create app directory
-WORKDIR /usr/src/app
+# Add application sources
+COPY --chown=1001:1001 . $HOME
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+#### generate build --prod
+RUN ng build --configuration=production --output-hashing=none && ng run globex-ui:server:production --output-hashing=none
 
-RUN npm install  ci --only=production
+# Second stage copies the application to the minimal image
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal:1
 
-# Bundle app source
-COPY ./dist ./dist
+# ENV variables
+# API_BASE_URL: URL of service to connect to
+# HTTP_PORT: The http port this service listens on
+ENV HTTP_PORT=8080 \
+    NODE_ENV=prod
 
-EXPOSE 80
-CMD [ "node", "./dist/globex-ui/server/main.js" ]
+# Copy the application source and build artifacts from the builder image to this one
+COPY --chown=1001:1001 --from=builder $HOME/dist $HOME/dist
 
+# Expose the http port
+EXPOSE 8080
+
+# Run script uses standard ways to run the application
+RUN pwd
+RUN ls -a
+CMD node ./dist/globex-ui/server/main.js
