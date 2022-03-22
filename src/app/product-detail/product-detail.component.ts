@@ -4,6 +4,7 @@ import { CartService } from '../cart.service';
 import { CoolstoreCookiesService } from '../coolstore-cookies.service';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { PaginatedProductsList } from '../models/product.model';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,9 +20,12 @@ export class ProductDetailComponent implements OnInit {
   cartService:CartService;
   coolstoreCookiesService:CoolstoreCookiesService;
   
+  productIdFromRoute:string;  
   currentProduct;
+  isProductLiked = false;
+  
   constructor(coolStoreService:CoolStoreProductsService, cookieService: CookieService,
-    coolstoreCookiesService:CoolstoreCookiesService, cartService:CartService) {
+    coolstoreCookiesService:CoolstoreCookiesService, cartService:CartService, private route: ActivatedRoute) {
     this.coolStoreService = coolStoreService;
     this.cartService = cartService;
     this.cookieService = cookieService;
@@ -29,24 +33,32 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const routeParams = this.route.snapshot.paramMap;
+    this.productIdFromRoute = String(routeParams.get('itemId'));
+    console.log("productIdFromRoute", this.productIdFromRoute)
     this.getProductDetails();
-    this.setupProductLikes();
+    //this.setupProductLikes();
+  }
+  
+  getProductDetails() {
+    this.coolStoreService.getProductDetailsByIds(this.productIdFromRoute)
+    .subscribe(product => {
+      this.currentProduct = product[0]; 
+      this.setupProductLikes();
+      console.log("this.currentProduct ", this.currentProduct)
+    } )
+    ;
     
-   }
-   getProductDetails() {
-      this.currentProduct = new PaginatedProductsList()
-      
-              console.log("this.currentProduct ", this.currentProduct )
               
   }
  
    setupProductLikes(){
-    this.coolstoreCookiesService.getAllProductLikes();
-    this.coolstoreCookiesService.setupSingleProductForLike(this.currentProduct);
+    this.isProductLiked = this.coolstoreCookiesService.isProductLiked(this.currentProduct.itemId);
    }
  
    saveUserLike(event, product) {
      this.coolstoreCookiesService.saveUserLike(event, product);
+     this.isProductLiked = true;
 
   }
    

@@ -23,6 +23,7 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { HomeComponent } from './home/home.component';
 import { AppConfigService } from './providers/app-config.service'
+import { CoolstoreCookiesService } from './coolstore-cookies.service';
 
 
 export function initConfig(appConfig: AppConfigService) {
@@ -63,7 +64,7 @@ const routes = [
     {
       provide: APP_INITIALIZER, useFactory: initConfig,  deps: [AppConfigService],  multi: true
     }, 
-    CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService],
+    CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService, CoolstoreCookiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

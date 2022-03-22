@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { LogService } from '../log.service';
@@ -11,6 +11,8 @@ import { LogService } from '../log.service';
   styleUrls: ['./product-recommendation.component.css']
 })
 export class ProductRecommendationComponent implements OnInit {
+
+  @Input() pageViewType:any;
 
   coolStoreService:CoolStoreProductsService;
   logService:LogService;

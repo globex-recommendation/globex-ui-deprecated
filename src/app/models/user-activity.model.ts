@@ -22,8 +22,6 @@ export class Activity {
       this.rand = rand;
       this.type = type;
     }
-
-
 }
 
 export class UserInfo {
@@ -32,8 +30,8 @@ export class UserInfo {
   firstVisitTs: number;
   campaign: string;
   newVisit: number;
-  localTime: Date;
-  constructor(visitsCount: number,    prevVisitTs: number,    firstVisitTs: number,     campaign: string,     newVisit: number,    localTime: Date) {
+  localTime: string;
+  constructor(visitsCount: number,    prevVisitTs: number,    firstVisitTs: number,     campaign: string,     newVisit: number,    localTime: string) {
     this.visitsCount = visitsCount;
     this.prevVisitTs = prevVisitTs;
     this.firstVisitTs = firstVisitTs;

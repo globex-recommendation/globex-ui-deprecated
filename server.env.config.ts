@@ -14,21 +14,22 @@ const envServerConfig = {
   ANGULR_API_GETPAGINATEDPRODUCTS_LIMIT: 8,
   ANGULR_API_GETRECOMMENDEDPRODUCTS: '/api/getRecommendedProducts',
   ANGULR_API_TRACKUSERACTIVITY: '/api/trackUserActivity',
+  ANGULR_API_GETPRODUCTDETAILS_FOR_IDS: '/api/getProductDetailsForIds',
   
   
   NODE_ENV: get('NODE_ENV').default('dev').asEnum(['dev', 'prod']),
   LOG_LEVEL: get('LOG_LEVEL').asString(),
 
   // HTTP and WebSocket traffic both use this port
-  HTTP_PORT: get('HTTP_PORT').default(8080).asPortNumber(),
+  PORT: get('PORT').default(4200).asPortNumber(),
 
 
   // external micro services typically running on OpenShift
-  TRACK_USERACTIVITY_SERVICE: get('USERACTIVITY_TRACK_SERVICE').default('http://localhost:8083/service/userActivity/track').asString(),
-  PRODUCT_SCORE_SERVICE: get('PRODUCT_SCORE_SERVICE').default('https://a19a3794-9518-499c-8edb-2fd67ec7511f.mock.pstmn.io/service/getPaginatedProducts').asString(),
-  CATALOG_GETPAGINATEDPRODUCTS_SERVICE: get('CATALOG_GETPAGINATEDPRODUCTS_SERVICE').default('https://a19a3794-9518-499c-8edb-2fd67ec7511f.mock.pstmn.io/service/getPaginatedProducts').asString(),
-  CATALOG_PRODUCTSBYIDS_SERVICE: get('CATALOG_PRODUCTSBYIDS_SERVICE').default('https://a19a3794-9518-499c-8edb-2fd67ec7511f.mock.pstmn.io/service/getPaginatedProducts').asString(),
-  CATALOG_RECOMMENDED_PRODUCTS_SERVICE: get('RECOMMENDED_PRODUCTS_SERVICE').default('http://localhost:8081/services/products').asString(),
+  API_TRACK_USERACTIVITY: get('API_TRACK_USERACTIVITY').default('https://activity-tracking-mock-globex-recommendation.apps.appservices.8d2l.s1.devshift.org/track').asString(),
+  API_GET_PAGINATED_PRODUCTS: get('API_GET_PAGINATED_PRODUCTS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org/services/products').asString(),
+  API_GET_PRODUCT_DETAILS_BY_IDS: get('API_GET_PRODUCT_DETAILS_BY_IDS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org/services/product/list/').asString(),
+  API_CATALOG_RECOMMENDED_PRODUCT_IDS: get('API_CATALOG_RECOMMENDED_PRODUCT_IDS').default('https://microcks-microcks.apps.appservices.8d2l.s1.devshift.org/rest/Recommendation+API/1.0.0/score/product').asString()
+  
   
 };
 

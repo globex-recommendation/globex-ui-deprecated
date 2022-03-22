@@ -1,22 +1,35 @@
 <div class="card">
   <div class="card-body">
 
-    <ngb-carousel class="carousel-dark slide" *ngIf="recommendedProducts">
-      <ng-template ngbSlide *ngFor="let product of recommendedProducts" >
+    <ngb-carousel class="carousel-dark slide" *ngIf="recommendedProducts && pageViewType!=='homePage'">>
+      <ng-template ngbSlide *ngFor="let product of recommendedProducts">
         <div class="picsum-img-wrapper">
-          <img class="img-responsive img-circle" src="../../assets/images/{{product.itemId}}.jpg" style=" height:200px; padding-left: 200px;" >
+          <img class="img-responsive img-circle" src="../../assets/images/{{product.itemId}}.jpg"
+            style=" height:200px; padding-left: 200px;">
         </div>
         <div class="carousel-caption d-none d-md-block">
           <h3>{{product.name}}</h3>
           <p>{{product.description}}</p>
           <p><a routerLink="/product-detail/{{product.itemId}}" class="btn btn-primary btn-sm">Check it out!</a></p>
-
         </div>
-
       </ng-template>
-
     </ngb-carousel>
 
-
+    <div *ngIf="recommendedProducts && pageViewType==='homePage'">
+      <h1 class="display-6">Featured Products</h1>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let product of recommendedProducts">
+          <div class="card">
+            <img src="../../assets/images/{{product.itemId}}.jpg" class="card-img-top" alt="..." style="height:400px">
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">{{product.description}}</p>
+              <a routerLink="/product-detail/{{product.itemId}}" class="btn btn-primary btn-sm">Check it out!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>

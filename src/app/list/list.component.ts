@@ -10,7 +10,7 @@ import { PaginatedProductsList } from '../models/product.model';
   styleUrls: ['./list.component.css']
 })
 
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit {
   products = new PaginatedProductsList();
   
   
@@ -49,10 +49,6 @@ export class ListComponent implements OnInit, OnDestroy {
     }
     
   } 
-
-  ngOnDestroy() {
-   
-  }
 
 
 
