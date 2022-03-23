@@ -50,30 +50,13 @@ export class ItemComponent implements OnInit {
   }
 
   saveUserLike(event, product) {
-    /* console.log(product)
-    product.liked = true;
-    var productLikesCookieValue = this.cookieService.get('productLikes')
-    var likedProductsList = [];
-    if(productLikesCookieValue!=='') {
-      likedProductsList = productLikesCookieValue.split(',');
-    }
-    likedProductsList.push(product.itemId)
-    likedProductsList= likedProductsList.filter((item, i, ar) => ar.indexOf(item) === i);
-
-    this.cookieService.set('productLikes', likedProductsList.toString());
-
-     const userActivity = new UserActivityModel( 
-      GlobexConstants.General.SITE_ID,
-      new Activity(uuidv4(), "url",         "rand" ,       "type") ,
-      new UserInfo(0,0,0,'',0,new Date()),
-      new ActionInfo('productId', '', '')
-      )
- */    
       this.coolstoreCookiesService.saveUserLike(event, product);
-    //export interface UserActivity {
-
-
+  
   }
+  removeProductLike(event, product) {
+    this.coolstoreCookiesService.removeProductLike(event, product);
+
+}
 
   addToCart(event, product) {
     this.cartService.addProductToCart(product);

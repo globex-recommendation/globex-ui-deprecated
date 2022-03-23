@@ -64,7 +64,6 @@ export class CoolstoreCookiesService {
 
   saveUserLike(event, product) {
     console.log("[CoolstoreCookieService].saveUserLike()", product)
-
     product.liked = true;
     var productLikesCookieValue = this.cookieService.get('productLikes')
     console.log("productLikesCookieValue", productLikesCookieValue)
@@ -116,7 +115,7 @@ export class CoolstoreCookiesService {
       })
     };
     
-      console.log("[CoolstoreCookiesService]-[saveUserActivityPost] called");
+
 
       return this.http.post<UserActivityModel>(this.saveUserActivityPostUrl, this.userActivityObj)
       .pipe(
@@ -143,6 +142,18 @@ export class CoolstoreCookiesService {
       currentProduct.liked = true;
     }
     console.log("[CoolstoreCookieService].setupProductLikes()", currentProduct)
+  }
+  
+
+  removeProductLike(event, currentProduct){
+    currentProduct.liked = false;
+      this.likeProductsListFromCookie.forEach((element,index)=>{
+      if(element===currentProduct.itemId) {
+        this.likeProductsListFromCookie.splice(index,1);
+        currentProduct.liked = false;
+      }
+   });
+   this.cookieService.set('productLikes', this.likeProductsListFromCookie.toString());
   }
 
   isProductLiked(currentProductId){

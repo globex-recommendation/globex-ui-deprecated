@@ -41,6 +41,14 @@ export class CoolStoreProductsService {
       );
   }
 
+  fetchFavouriteProductsList(page): Observable<any> {
+    console.log("[CoolStoreProductsService]-[fetchFavouriteProductsList] called");
+    return this.http.get<any>(this.paginatedProductsListUrl+"?page="+page + "&limit="+this.paginationLimit ) 
+      .pipe(
+        catchError(this.handleError('fetchPaginatedProductsList', ''))
+      );
+  }
+
   /** getRecommendedProducts  from the server */
   getRecommendedProducts(): Observable<any[]> {
     console.log("[CoolStoreProductsService]-[getRecommendedProducts] called");
@@ -50,7 +58,7 @@ export class CoolStoreProductsService {
       );
   }
 
-  /** getRecommendedProducts  from the server */
+  /** getProductDetailsByIds  from the server */
   getProductDetailsByIds(productIds): Observable<any[]> {
     console.log("[CoolStoreProductsService]-[getProductDetailsByIds] called");
     return this.http.get<any[]>(this.getProductDetailsByIdsUrl+"?productIds=" + productIds)

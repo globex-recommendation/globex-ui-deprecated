@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { PaginatedProductsList } from '../models/product.model';
+import serverEnvConfig from "server.env.config";
 
 @Component({
   selector: 'app-list',
@@ -12,16 +12,15 @@ import { PaginatedProductsList } from '../models/product.model';
 
 export class ListComponent implements OnInit {
   products = new PaginatedProductsList();
+  paginationLimit = serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS_LIMIT; //number of products per page
   
   
-  activatedRoute: ActivatedRoute;
   coolStoreService: CoolStoreProductsService;
-  loadedSide = '';
   subscription:Subscription;
   page = 1;
 
-  constructor(activatedRoute:ActivatedRoute, coolStoreService:CoolStoreProductsService) {
-    this.activatedRoute = activatedRoute;
+  constructor(coolStoreService:CoolStoreProductsService) {
+    
     this.coolStoreService  = coolStoreService;
 
   }

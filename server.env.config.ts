@@ -25,11 +25,18 @@ const envServerConfig = {
 
 
   // external micro services typically running on OpenShift
-  API_TRACK_USERACTIVITY: get('API_TRACK_USERACTIVITY').default('https://activity-tracking-mock-globex-recommendation.apps.appservices.8d2l.s1.devshift.org/track').asString(),
-  API_GET_PAGINATED_PRODUCTS: get('API_GET_PAGINATED_PRODUCTS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org/services/products').asString(),
-  API_GET_PRODUCT_DETAILS_BY_IDS: get('API_GET_PRODUCT_DETAILS_BY_IDS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org/services/product/list/').asString(),
-  API_CATALOG_RECOMMENDED_PRODUCT_IDS: get('API_CATALOG_RECOMMENDED_PRODUCT_IDS').default('https://microcks-microcks.apps.appservices.8d2l.s1.devshift.org/rest/Recommendation+API/1.0.0/score/product').asString()
+  API_MANAGEMENT_FLAG: get('API_MANAGEMENT_FLAG').asString(),
   
+  API_TRACK_USERACTIVITY: get('API_TRACK_USERACTIVITY').default('https://activity-tracking-mock-globex-recommendation.apps.appservices.8d2l.s1.devshift.org/track').asString(),
+  
+  API_GET_PAGINATED_PRODUCTS: get('API_GET_PAGINATED_PRODUCTS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org:443/services/products').asString(),
+  
+  API_GET_PRODUCT_DETAILS_BY_IDS: get('API_GET_PRODUCT_DETAILS_BY_IDS').default('https://catalog-globex.apps.appservices.8d2l.s1.devshift.org/services/product/list/').asString(),
+  
+  API_CATALOG_RECOMMENDED_PRODUCT_IDS: get('API_CATALOG_RECOMMENDED_PRODUCT_IDS').default('https://microcks-microcks.apps.appservices.8d2l.s1.devshift.org/rest/Recommendation+API/1.0.0/score/product').asString(),
+  
+  API_USER_KEY_NAME: get('USER_KEY').default('api_key').asString(),
+  API_USER_KEY_VALUE: get('API_USER_KEY_VALUE').default('8efad5cc78ecbbb7dbb8d06b04596aeb').asString()
   
 };
 

@@ -20,7 +20,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" *ngFor="let product of recommendedProducts">
           <div class="card">
-            <img src="../../assets/images/{{product.itemId}}.jpg" class="card-img-top" alt="..." style="height:400px">
+            <img src="../../assets/images/{{product.itemId}}.jpg" class="card-img-top" alt="{{product.name}}" style="height:400px" routerLink="/product-detail/{{product.itemId}}" >
             <div class="card-body">
               <h5 class="card-title">{{product.name}}</h5>
               <p class="card-text">{{product.description}}</p>

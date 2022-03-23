@@ -14,7 +14,6 @@ import { ListComponent } from './list/list.component';
 import { ItemComponent } from './item/item.component';
 import { CoolStoreProductsService } from './coolstore-products.service';
 import { LogService } from './log.service';
-import { UserActivityModel } from './models/user-activity.model';
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -24,6 +23,7 @@ import { MessageService } from './message.service';
 import { HomeComponent } from './home/home.component';
 import { AppConfigService } from './providers/app-config.service'
 import { CoolstoreCookiesService } from './coolstore-cookies.service';
+import { YourFavouritesComponent } from './your-favourites/your-favourites.component';
 
 
 export function initConfig(appConfig: AppConfigService) {
@@ -35,6 +35,7 @@ const routes = [
   {path: 'products', component: TabsComponent},
   {path: 'cart', component: CartComponent},
   {path: 'product-detail/:itemId', component: ProductDetailComponent},
+  {path: 'myFavourites', component: YourFavouritesComponent},  
   {path: '**', redirectTo: '/home'}
 
 ];
@@ -49,7 +50,8 @@ const routes = [
     HeaderComponent,
     ProductDetailComponent,
     ProductRecommendationComponent,
-    HomeComponent
+    HomeComponent,
+    YourFavouritesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -68,6 +70,7 @@ const routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  
 
 
 }

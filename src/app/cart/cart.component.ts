@@ -35,8 +35,18 @@ export class CartComponent implements OnInit {
     this.cartService.getTotalProductsQuantityInCart();
   }
 
-  onEnter(product){
-    if(product.orderQuantity >1)
-    product.orderQuantity = product.orderQuantity-1;
+  addOneCount(product, index){
+    product.orderQuantity = product.orderQuantity+1;
+  }
+
+  removeOneCount(product, index){
+    if(product.orderQuantity > 0) {
+      product.orderQuantity = product.orderQuantity-1;
+    }
+  }
+
+  deleteProduct(product, index){
+    this.productsInCart.splice(index, 1);
+    
   }
 }

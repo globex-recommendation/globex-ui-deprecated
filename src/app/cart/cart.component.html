@@ -24,15 +24,15 @@
                 </tr>
               </thead>
               <tbody class="table-striped">
-                <tr *ngFor="let product of productsInCart">
+                <tr *ngFor="let product of productsInCart; let i = index">
                   <td scope="row">
-                    <img src="../../assets/images/{{product.name}}.jpg" class="img-fluid mb-4 mr-3" style="width: 100px;"/>
+                    <img src="../../assets/images/{{product.itemId}}.jpg"  class="img-fluid mb-4 mr-3" style="width: 100px;"/>
                     {{ product.name }}</td>
                   <td scope="row">
-                    <i class="fa fa-minus"></i>&nbsp;
-                    <span><input (keyup.enter)="onEnter(product)" type="text" maxlength="3"
+                    <i class="fa fa-minus" (click)="removeOneCount(product, i)"></i>&nbsp;
+                    <span><input type="text" maxlength="3"
                         style="width: 25px; text-align: center" [value]="product.orderQuantity" /></span>&nbsp;
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-plus" (click)="addOneCount(product, i)"></i>
                   </td>
                   <td scope="row">{{ product.price | currency }}</td>
                   <td scope="row">
@@ -40,7 +40,7 @@
                     &nbsp;&nbsp;
                   </td>
                   <td scope="row">
-                    <i class="fa fa-times"></i>
+                    <i class="fa fa-times" (click)="deleteProduct(product, i)"></i>
                   </td>
                 </tr>
                 <tr>
