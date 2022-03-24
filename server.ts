@@ -91,8 +91,8 @@ export function app(): express.Express {
         //console.debug("getRecommendedProducts ID", getRecommendedProducts )
 
         //get a list of Product Ids from the array sent
-        //var prodArray = getRecommendedProducts.map(s=>s.productId);
-        var prodArray = getRecommendedProducts.slice(0,5).map(s=>s.productId);
+        var prodArray = getRecommendedProducts.map(s=>s.productId);
+        
         commaSeparatedProdIds = prodArray.toString();
         //console.debug("commaSeparatedProdIds", commaSeparatedProdIds);
 

@@ -18,7 +18,7 @@
     <div *ngIf="recommendedProducts && pageViewType==='homePage'">
       <h1 class="display-6">Featured Products</h1>
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" *ngFor="let product of recommendedProducts">
+        <div class="col" *ngFor="let product of recommendedProducts.slice(0,5)">
           <div class="card">
             <img src="../../assets/images/{{product.itemId}}.jpg" class="card-img-top" alt="{{product.name}}" style="height:400px" routerLink="/product-detail/{{product.itemId}}" >
             <div class="card-body">

@@ -33,6 +33,7 @@ export class ProductRecommendationComponent implements OnInit {
   fetchRecommendedProducts() {
     this.coolStoreService.getRecommendedProducts()
       .subscribe(products => (this.recommendedProducts = products));
+      
   }
 
 
