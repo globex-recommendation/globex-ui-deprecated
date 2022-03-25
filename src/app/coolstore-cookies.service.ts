@@ -32,11 +32,10 @@ export class CoolstoreCookiesService {
 
   }
 
-  getUserDetailsFromCookie() {
-    
+  getUserDetailsFromCookie() {    
+  
     this.userDetailsFromCookie = this.cookieService.get('userDetailsMap');
-    console.log("this.userDetailsFromCookie", this.userDetailsFromCookie);
-    console.log("this.cookieService.check('userDetailsMap')", this.cookieService.check('userDetailsMap'))
+    
   
     if(!this.cookieService.check('userDetailsMap')) {
       console.log("no user details yet");
@@ -46,13 +45,11 @@ export class CoolstoreCookiesService {
       this.userDetailsMap["userId"] = uuidv4();
       this.userDetailsMap["newVisit"] = 1;
       this.userDetailsMap["visitsCount"] = 1;
-      console.log("this.userDetailsMap.toString()", this.userDetailsMap.toString())
       this.cookieService.set('userDetailsMap', JSON.stringify(this.userDetailsMap));
     } else {
       this.userDetailsMap = JSON.parse(this.userDetailsFromCookie);
       this.userDetailsMap["prevVisitTs"] = this.userDetailsMap["currentVisitTs"];
       this.userDetailsMap["currentVisitTs"] = new Date().getTime().toString();
-      console.log("this.Cookie userDetails", this.userDetailsMap);
       this.userDetailsMap["newVisit"] = 0;
       
       var visitsCount = this.userDetailsMap["visitsCount"];
@@ -63,10 +60,8 @@ export class CoolstoreCookiesService {
   }
 
   saveUserLike(event, product) {
-    console.log("[CoolstoreCookieService].saveUserLike()", product)
     product.liked = true;
     var productLikesCookieValue = this.cookieService.get('productLikes')
-    console.log("productLikesCookieValue", productLikesCookieValue)
     var likedProductsList = [];
     if(productLikesCookieValue!=='') {
       likedProductsList = productLikesCookieValue.split(',');
@@ -95,34 +90,22 @@ export class CoolstoreCookiesService {
                               new ActionInfo(product.itemId, '', '')
                               )
 
-    console.log("userActivity", this.userActivityObj);
-    
-    this.saveUserActivityPost().subscribe(response =>         {
+        this.saveUserActivityPost().subscribe(response =>         {
           console.log("saveUserActivityPost", response);
         });
-    
+                          
   
   }
 
   
   saveUserActivityPostUrl = serverEnvConfig.ANGULR_API_TRACKUSERACTIVITY;  // URL to web api
   saveUserActivityPost(): Observable<UserActivityModel> {
-    var httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
-
-        Authorization: 'my-auth-token'
-      })
-    };
-    
-
-
       return this.http.post<UserActivityModel>(this.saveUserActivityPostUrl, this.userActivityObj)
       .pipe(
         catchError(this.handleError('userActivityObj', this.userActivityObj))
       );
-    
-  }
+
+    }
 
 
   dateToFormattedString() {    
@@ -165,10 +148,6 @@ export class CoolstoreCookiesService {
     }
   }
  
-  nullifyCookies(){ 
-    console.log("nullifyCookies", this.cookieService.get('productLikes'))
-    this.cookieService.set('productLikes', '');
-  }
 
 }
 

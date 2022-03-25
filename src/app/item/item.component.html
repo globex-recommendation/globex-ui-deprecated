@@ -3,7 +3,7 @@
 	<div class="row">
 			<div class="item">
 		<div>
-		<div style="text-align: left; cursor:pointer">
+		<div routerLink="/product-detail/{{product.itemId}}"   style="text-align: left; cursor:pointer">
 			<h2 class="card-pf-title">{{product.name}} &nbsp; </h2>
 		</div>
 		
@@ -16,7 +16,7 @@
 
 			<div class="row ">
 				<div class="col-xs-12 align-items-center">
-					<img routerLink="/product-detail/{{product.itemId}}"  class="img-responsive img-circle" src="../../assets/images/{{product.itemId}}.jpg" style=" height:200px " >
+					<img routerLink="/product-detail/{{product.itemId}}"  class="img-responsive img-circle" src="../../assets/images/{{product.itemId}}.jpg" style=" height:200px;cursor:pointer " >
 				</div>
 			</div>
 

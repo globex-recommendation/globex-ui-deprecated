@@ -9,7 +9,7 @@
             <div class="\ col-md-6">
                 <div class="userLikeBtn">
                     <i *ngIf="!isProductLiked" class="float-right fa fa-heart-o userLikeOff"  (click)="saveUserLike($event, currentProduct)" ></i>
-                    <i *ngIf="isProductLiked" class="float-right fa fa-heart userLikeOn" ></i>
+                    <i *ngIf="isProductLiked" class="float-right fa fa-heart userLikeOn" (click)="removeProductLike($event, currentProduct)" ></i>
                   </div>
                 <h3 class="product-title">{{currentProduct.name}}</h3>
                 <br><br>

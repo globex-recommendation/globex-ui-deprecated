@@ -44,11 +44,6 @@ export class ItemComponent implements OnInit {
   }
 
 
-
-  nullifyCookies(){
-    this.coolstoreCookiesService.nullifyCookies();
-  }
-
   saveUserLike(event, product) {
       this.coolstoreCookiesService.saveUserLike(event, product);
   
@@ -56,7 +51,7 @@ export class ItemComponent implements OnInit {
   removeProductLike(event, product) {
     this.coolstoreCookiesService.removeProductLike(event, product);
 
-}
+  }
 
   addToCart(event, product) {
     this.cartService.addProductToCart(product);

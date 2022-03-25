@@ -7,15 +7,7 @@ export class AppConfigService {
   private config: any;
   constructor(private http: HttpClient) { }
   public loadConfig() {
-    return this.http.get('./assets/config/config.json')
-      .toPromise()
-      .then((config: any) => {
-        this.config = config;
-        console.log(this.config);
-      })
-      .catch((err: any) => {
-        console.error(err);
-      });
+//App initialization code here
   }
   getConfig() {
     return this.config;

@@ -24,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { AppConfigService } from './providers/app-config.service'
 import { CoolstoreCookiesService } from './coolstore-cookies.service';
 import { YourFavouritesComponent } from './your-favourites/your-favourites.component';
+import { CartService } from './cart.service';
 
 
 export function initConfig(appConfig: AppConfigService) {
@@ -66,7 +67,7 @@ const routes = [
     {
       provide: APP_INITIALIZER, useFactory: initConfig,  deps: [AppConfigService],  multi: true
     }, 
-    CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService, CoolstoreCookiesService],
+    CoolStoreProductsService, LogService, CookieService, HttpErrorHandler, MessageService, CoolstoreCookiesService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

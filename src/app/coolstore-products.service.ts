@@ -34,7 +34,6 @@ export class CoolStoreProductsService {
 
  
   fetchPaginatedProductsList(page): Observable<any> {
-    console.log("[CoolStoreProductsService]-[fetchPaginatedProductsList] called");
     return this.http.get<any>(this.paginatedProductsListUrl+"?page="+page + "&limit="+this.paginationLimit ) 
       .pipe(
         catchError(this.handleError('fetchPaginatedProductsList', ''))
@@ -42,7 +41,6 @@ export class CoolStoreProductsService {
   }
 
   fetchFavouriteProductsList(page): Observable<any> {
-    console.log("[CoolStoreProductsService]-[fetchFavouriteProductsList] called");
     return this.http.get<any>(this.paginatedProductsListUrl+"?page="+page + "&limit="+this.paginationLimit ) 
       .pipe(
         catchError(this.handleError('fetchPaginatedProductsList', ''))
@@ -51,7 +49,6 @@ export class CoolStoreProductsService {
 
   /** getRecommendedProducts  from the server */
   getRecommendedProducts(): Observable<any[]> {
-    console.log("[CoolStoreProductsService]-[getRecommendedProducts] called");
     return this.http.get<any[]>(this.recommendedProductsListUrl)
       .pipe(
         catchError(this.handleError('[[CoolStoreProductsService]-[getRecommendedProducts]', []))

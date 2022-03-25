@@ -56,15 +56,15 @@ export function app(): express.Express {
   //Get Paginated Products
   
   server.get(serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS, (req, res) => {
-    console.log("SSR:::: O/P from '/api/getPaginatedProducts' invoked from server.ts with req.params", req.query['page'] 
-    + 'with URL as' + serverEnvConfig.API_GET_PAGINATED_PRODUCTS + "?" + req.query['page']  + "&limit=" +req.query['limit'] )
+    /* console.log("SSR:::: O/P from '/api/getPaginatedProducts' invoked from server.ts with req.params", req.query['page'] 
+    + 'with URL as' + serverEnvConfig.API_GET_PAGINATED_PRODUCTS + "?" + req.query['page']  + "&limit=" +req.query['limit'] ) */
     var getProducts:PaginatedProductsList;
     var myTimestamp = new Date().getTime().toString();
     var url = serverEnvConfig.API_GET_PAGINATED_PRODUCTS.toString();
     var limit = req.query['limit'];
     var page = req.query['page'];
 
-    console.log("URL called is: ", url);
+    console.debug("URL called is: ", url);
     axios.get(url, {params: { limit: limit, timestamp:myTimestamp , page: page } })
       .then(response => {
         getProducts =  response.data;;
@@ -81,33 +81,28 @@ export function app(): express.Express {
     console.debug('SSR:::: erEnvConfig.ANGULR_API_GETRECOMMENDEDPRODUCTS ' + serverEnvConfig.ANGULR_API_GETRECOMMENDEDPRODUCTS+ ' invoked');
     var commaSeparatedProdIds;
     var recommendedProducts= [];
-    var url1 = serverEnvConfig.API_CATALOG_RECOMMENDED_PRODUCT_IDS;
-    var url2 = serverEnvConfig.API_GET_PRODUCT_DETAILS_BY_IDS;
+    var getRecommendedProducIdsURL = serverEnvConfig.API_CATALOG_RECOMMENDED_PRODUCT_IDS;
+    var getProdDetailsByIdURL = serverEnvConfig.API_GET_PRODUCT_DETAILS_BY_IDS;
     var getRecommendedProducts;
     axios
-      .get(url1)
+      .get(getRecommendedProducIdsURL)
       .then(response => {
         getRecommendedProducts =  response.data;
         //console.debug("getRecommendedProducts ID", getRecommendedProducts )
 
         //get a list of Product Ids from the array sent
-        var prodArray = getRecommendedProducts.map(s=>s.productId);
-        
+        var prodArray = getRecommendedProducts.map(s=>s.productId);        
+
         commaSeparatedProdIds = prodArray.toString();
         //console.debug("commaSeparatedProdIds", commaSeparatedProdIds);
 
-        return axios.get(url2 + commaSeparatedProdIds);
+        return axios.get(getProdDetailsByIdURL + commaSeparatedProdIds);
       })
       .then(response => {
-        //console.log("ANGULR_API_GETRECOMMENDEDPRODUCTS O/P", response.data);
-        var prodDetailsArray = [];
-        prodDetailsArray = response.data;
-
-
-        const a3 = getRecommendedProducts.map(t1 => ({...t1, ...prodDetailsArray.find(t2 => t2.itemId === t1.productId)}))
-        //console.log("getRecommendedProducts",a3)
-        
-        res.send(a3);
+        var prodDetailsArray = response.data;
+        var returnData = getRecommendedProducts.map(t1 => ({...t1, ...prodDetailsArray.find(t2 => t2.itemId === t1.productId)}))
+        returnData = returnData.slice(0,serverEnvConfig.RECOMMENDED_PRODUCTS_LIMIT);
+        res.send(returnData);
       }).catch(error => { console.log("ANGULR_API_GETRECOMMENDEDPRODUCTS", error); });
   });
   
@@ -130,7 +125,7 @@ export function app(): express.Express {
   // Save user activity
   
   server.post(serverEnvConfig.ANGULR_API_TRACKUSERACTIVITY, (req, res) => {
-    console.log('SSR::::' + serverEnvConfig.ANGULR_API_TRACKUSERACTIVITY+ ' invoked');
+    //console.log('SSR::::' + serverEnvConfig.ANGULR_API_TRACKUSERACTIVITY+ ' invoked');
     var url = serverEnvConfig.API_TRACK_USERACTIVITY;
     axios
       .post(url, req.body)

@@ -1,31 +1,30 @@
 
 import { get } from 'env-var';
-//import { join } from 'path'
-
 
 const envServerConfig = {
 
   
-  // Location of Angular build and other files. Defaults to the dist/
-  // in the root of the project
-  //STATIC_DIR: get('STATIC_DIR').default(join(__dirname, '../dist/globex-ui')).asString(),
-
+  //client UI to SSR calls
   ANGULR_API_GETPAGINATEDPRODUCTS: '/api/getPaginatedProducts',
   ANGULR_API_GETPAGINATEDPRODUCTS_LIMIT: 8,
   ANGULR_API_GETRECOMMENDEDPRODUCTS: '/api/getRecommendedProducts',
   ANGULR_API_TRACKUSERACTIVITY: '/api/trackUserActivity',
   ANGULR_API_GETPRODUCTDETAILS_FOR_IDS: '/api/getProductDetailsForIds',
+
+
+  RECOMMENDED_PRODUCTS_LIMIT: get('RECOMMENDED_PRODUCTS_LIMIT').default(5).asInt(),
   
   
   NODE_ENV: get('NODE_ENV').default('dev').asEnum(['dev', 'prod']),
   LOG_LEVEL: get('LOG_LEVEL').asString(),
+
 
   // HTTP and WebSocket traffic both use this port
   PORT: get('PORT').default(4200).asPortNumber(),
 
 
   // external micro services typically running on OpenShift
-  API_MANAGEMENT_FLAG: get('API_MANAGEMENT_FLAG').asString(),
+  API_MANAGEMENT_FLAG: get('API_MANAGEMENT_FLAG').default("NO").asString(),
   
   API_TRACK_USERACTIVITY: get('API_TRACK_USERACTIVITY').default('https://activity-tracking-mock-globex-recommendation.apps.appservices.8d2l.s1.devshift.org/track').asString(),
   

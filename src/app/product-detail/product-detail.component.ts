@@ -46,10 +46,8 @@ export class ProductDetailComponent implements OnInit {
       this.currentProduct = product[0]; 
       this.setupProductLikes();
       console.log("this.currentProduct ", this.currentProduct)
-    } )
-    ;
-    
-              
+    } 
+    );            
   }
  
    setupProductLikes(){
@@ -62,11 +60,10 @@ export class ProductDetailComponent implements OnInit {
 
   }
    
- 
-   nullifyCookies(){
-     this.coolstoreCookiesService.nullifyCookies();
-   }
-
+  removeProductLike(event, product) {
+    this.coolstoreCookiesService.removeProductLike(event, product);
+    this.isProductLiked = false;
+}
   
    addToCart(event, product) {
      this.cartService.addProductToCart(product);
