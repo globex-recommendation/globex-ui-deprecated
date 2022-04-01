@@ -55,6 +55,6 @@ export class ItemComponent implements OnInit {
 
   addToCart(event, product) {
     this.cartService.addProductToCart(product);
-    console.log(product);
+    //console.log(product);
   }
 }
