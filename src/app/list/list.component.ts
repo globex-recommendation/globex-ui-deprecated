@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { PaginatedProductsList } from '../models/product.model';
-import serverEnvConfig from "server.env.config";
+import serverEnvConfig from "client.env.config";
 
 @Component({
   selector: 'app-list',

@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
-import serverEnvConfig from "server.env.config";
+import serverEnvConfig from "client.env.config";
 
 
 @Injectable()

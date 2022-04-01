@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
 import { catchError, Observable } from 'rxjs';
-import serverEnvConfig from 'server.env.config';
+import serverEnvConfig from 'client.env.config';
 
 @Injectable({
   providedIn: 'root'
