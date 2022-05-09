@@ -113,35 +113,25 @@ export function app(): express.Express {
     var getProdDetailsByIdURL = API_GET_PRODUCT_DETAILS_BY_IDS;
     var getRecommendedProducts;
     axios
-      .get(getRecommendedProducIdsURL)
+      .get(getRecommendedProducIdsURL.replace('{category}','abcat0101001'))
       .then(response => {
-        getRecommendedProducts =  response.data;
-        //console.debug("getRecommendedProducts ID", getRecommendedProducts )
+        getRecommendedProducts = response.data;
+        getRecommendedProducts = getRecommendedProducts.slice(0,RECOMMENDED_PRODUCTS_LIMIT);
+        res.send(getRecommendedProducts);
 
-        //get a list of Product Ids from the array sent
-        var prodArray = getRecommendedProducts.map(s=>s.productId);        
 
-        commaSeparatedProdIds = prodArray.toString();
-        //console.debug("commaSeparatedProdIds", commaSeparatedProdIds);
-
-        return axios.get(getProdDetailsByIdURL + commaSeparatedProdIds);
       })
-      .then(response => {
-        var prodDetailsArray = response.data;
-        var returnData = getRecommendedProducts.map(t1 => ({...t1, ...prodDetailsArray.find(t2 => t2.itemId === t1.productId)}))
-        returnData = returnData.slice(0,RECOMMENDED_PRODUCTS_LIMIT);
-        res.send(returnData);
-      }).catch(error => { console.log("ANGULR_API_GETRECOMMENDEDPRODUCTS", error); });
+      .catch(error => { console.log("ANGULR_API_GETRECOMMENDEDPRODUCTS", error); });
   });
   
   
   // Get Product Details based on Product IDs
   server.get(ANGULR_API_GETPRODUCTDETAILS_FOR_IDS, (req, res) => {
     //console.log('SSR:::: ANGULR_API_GETPRODUCTDETAILS_FOR_IDS ' + ANGULR_API_GETPRODUCTDETAILS_FOR_IDS+ ' invoked');
-    var commaSeparatedProdIds =  req.query["productIds"]
+    var commaSeparatedProdIds =  req.query["productIds"] as string;
     var url = API_GET_PRODUCT_DETAILS_BY_IDS;
     axios
-      .get(url + commaSeparatedProdIds)
+      .get(url.replace('{ids}', commaSeparatedProdIds))
       .then(response => {
         //console.log("ANGULR_API_GETPRODUCTDETAILS_FOR_IDS for ids" + commaSeparatedProdIds, response.data); 
         res.send(response.data);

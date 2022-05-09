@@ -18,7 +18,7 @@
     <ul class="nav navbar-nav navbar-utility">
       <li class="nav-item" routerLinkActive="active">
           <ngb-pagination (pageChange)="loadPage($event)" [collectionSize]="products.totalElements" 
-                      [pageSize]="paginationLimit"  [maxSize]="(products.totalPages)" 
+                      [pageSize]="paginationLimit"  [maxSize]="5" [boundaryLinks]="true"
                       aria-label="Default pagination">
           </ngb-pagination>
       </li>
