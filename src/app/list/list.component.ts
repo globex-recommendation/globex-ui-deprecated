@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { CoolStoreProductsService } from '../coolstore-products.service';
 import { PaginatedProductsList } from '../models/product.model';
@@ -11,6 +12,9 @@ import serverEnvConfig from "client.env.config";
 })
 
 export class ListComponent implements OnInit {
+
+  testBrowser: boolean; 
+
   products = new PaginatedProductsList();
   paginationLimit = serverEnvConfig.ANGULR_API_GETPAGINATEDPRODUCTS_LIMIT; //number of products per page
   
@@ -19,23 +23,22 @@ export class ListComponent implements OnInit {
   subscription:Subscription;
   page = 1;
 
-  constructor(coolStoreService:CoolStoreProductsService) {
-    
+  constructor(coolStoreService:CoolStoreProductsService, @Inject(PLATFORM_ID) platformId:string) {
+    this.testBrowser = isPlatformBrowser(platformId);
     this.coolStoreService  = coolStoreService;
-
   }
 
 
   ngOnInit(): void {
-    this.fetchPaginatedProductsList(1);
+    if (this.testBrowser) {
+      this.fetchPaginatedProductsList(1);
+    }
   }
 
   fetchPaginatedProductsList(page) {
     
     this.coolStoreService.fetchPaginatedProductsList(page)
       .subscribe(products => (this.products = products));
-      
-      
   }
 
 
@@ -48,7 +51,4 @@ export class ListComponent implements OnInit {
     }
     
   } 
-
-
-
 }
