@@ -1,11 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand">
-      <a class="navbar-brand" href="home">
+      <a class="navbar-brand" routerLink="/home">
         <img src="../../assets/images/rh-logo.png" width="100px" class="d-inline-block align-middle" alt="">
       </a>
     </a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
+
+
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/home">Home</a>
@@ -20,16 +24,67 @@
           <a class="nav-link" routerLink="/myFavourites">My Favourites</a>
         </li>
       </ul>
+
+    
+      <ul class="nav navbar-nav navbar-utility">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/cart"><span class="fa fa-shopping-cart"></span>&nbsp;Cart
+            <strong>{{getTotalCartValue() | currency}}</strong> ({{getItemsCountOfProductsInCart()}} item(s))</a>
+        </li>
+        <li>
+
+          <div class="container" *ngIf="this.coolstoreCookiesService.user.isUserLoggedIn">
+            <a (click)="logout()" class=" nav-link login">Logout</a>
+          </div>
+          <div class="container" *ngIf="!this.coolstoreCookiesService.user.isUserLoggedIn">
+            <a (click)="show()" class=" nav-link login">Login</a>
+          </div>
+          <!-- Creates the bootstrap modal where the image will appear -->
+          <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Login</h4>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="text" required formControlName="email" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" required formControlName="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <div style="float: left">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="hide()">Close</button>
+                  </div>
+                  <div style="float: right">
+                    <button type="submit" class="btn btn-success login-btn" (click)="login()"
+                      [disabled]="!loginForm.valid">Log In!
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
-    <ul class="nav navbar-nav navbar-utility">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/cart"><span class="fa fa-shopping-cart"></span>&nbsp;Cart
-          <strong>{{getTotalCartValue() | currency}}</strong> ({{getItemsCountOfProductsInCart()}} item(s))</a>
-      </li>
-      <li>
-        <a class="nav-link">Login</a>
-      </li>
-    </ul>
 
   </div>
 </nav>
