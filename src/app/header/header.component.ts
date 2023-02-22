@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CartService } from '../cart.service';
 import { CoolstoreCookiesService } from '../coolstore-cookies.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ export class HeaderComponent  {
   
 
   constructor(cartService:CartService, coolstoreCookiesService:CoolstoreCookiesService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: UntypedFormBuilder) {
     this.cartService = cartService;
     this.coolstoreCookiesService = coolstoreCookiesService;
     this.isMenuCollapsed = true;
@@ -45,7 +45,7 @@ export class HeaderComponent  {
 
   //login code
   showModal: boolean;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   submitted = false;
   show()   {
     this.showModal = true; // Show-Hide Modal Check
