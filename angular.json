@@ -125,8 +125,7 @@
             "development": {
               "optimization": false,
               "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true
+              "extractLicenses": false
             }
           },
           "defaultConfiguration": "production"
@@ -176,17 +175,8 @@
       }
     }
   },
+  "defaultProject": "globex-ui",
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
-  },
-  "schematics": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    }
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
